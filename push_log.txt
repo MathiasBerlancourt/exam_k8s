@@ -1,2 +1,0 @@
-To github.com:MathiasBerlancourt/exam_k8s.git
-   4df8e1c..335eda4  main -> main

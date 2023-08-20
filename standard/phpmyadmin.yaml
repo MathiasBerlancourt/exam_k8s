@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: phpmyadmin-statefulset
+  namespace: standard
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: phpmyadmin
+  serviceName: phpmyadmin-service
+  template:
+    metadata:
+      labels:
+        app: phpmyadmin
+    spec:
+      containers:
+        - name: phpmyadmin-container
+          image: phpmyadmin/phpmyadmin:latest
+          env:
+            - name: PMA_HOST
+              value: mysql-service
+          ports:
+            - containerPort: 80
+  volumeClaimTemplates:
+    - metadata:
+        name: phpmyadmin-pvc
+      spec:
+        accessModes: [ReadWriteOnce]
+        resources:
+          requests:
+            storage: 10Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: phpmyadmin-service
+spec:
+  selector:
+    app: phpmyadmin
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80

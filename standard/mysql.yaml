@@ -17,8 +17,10 @@ spec:
         - name: mysql
           image: mysql:latest
           env:
-            - name: MYSQL_ROOT_PASSWOR	
-              value: azerty
+            - name: MYSQL_ROOT_PASSWORD	
+              value: password
+            - name: MYSQL_DATABASE
+              value: storedb
           ports:
             - containerPort: 3306
 ---

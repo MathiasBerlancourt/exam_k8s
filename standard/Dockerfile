@@ -10,15 +10,14 @@ RUN apt-get update && \
 WORKDIR /api
 
 # Clonage du projet FastAPI depuis GitHub
-RUN git clone https://github.com/MathiasBerlancourt/kubernetes-devops-project /api/repo
+RUN git clone https://github.com/MathiasBerlancourt/kubernetes-devops-project 
 
 # Mise à jour des paquets et installation des dépendances
 RUN apt-get update && \
     apt-get install -y python3-dev build-essential libffi-dev
 
 # Téléchargement des requirements
-RUN pip install --no-cache-dir --upgrade -r /api/repo/requirements.txt
-
+RUN pip install --no-cache-dir --upgrade -r /api/requirements.txt
 # Exposition du port sur lequel FastAPI va écouter
 EXPOSE 8000
 

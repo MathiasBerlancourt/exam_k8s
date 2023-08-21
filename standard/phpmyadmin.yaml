@@ -1,14 +1,13 @@
 apiVersion: apps/v1
-kind: StatefulSet
+kind: Deployment
 metadata:
-  name: phpmyadmin-statefulset
+  name: phpmyadmin-deployment
   namespace: standard
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: phpmyadmin
-  serviceName: phpmyadmin-service
   template:
     metadata:
       labels:
@@ -22,14 +21,6 @@ spec:
               value: mysql-service
           ports:
             - containerPort: 80
-  volumeClaimTemplates:
-    - metadata:
-        name: phpmyadmin-pvc
-      spec:
-        accessModes: [ReadWriteOnce]
-        resources:
-          requests:
-            storage: 10Gi
 ---
 apiVersion: v1
 kind: Service

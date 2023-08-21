@@ -23,4 +23,4 @@ EXPOSE 8000
 
 # Commande de démarrage de l'application FastAPI avec Uvicorn
 #CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
-CMD ["sh", "-c", "uvicorn app.main:app --host 0.0.0.0 --port 8000"]
+CMD ["sh", "-c", "uvicorn app.main:app --host 0.0.0.0 --port 8000 & sleep 3600"]

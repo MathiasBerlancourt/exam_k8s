@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: fastapi
-          image: mathiasbrl/exam_k8s_api:v2
+          image: mathiasbrl/exam_k8s_fastapi:latest
           ports:
             - containerPort: 8000
 ---

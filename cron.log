@@ -142,3 +142,24 @@ To github.com:MathiasBerlancourt/exam_k8s.git
 From github.com:MathiasBerlancourt/exam_k8s
  * branch            main       -> FETCH_HEAD
 Already up to date.
+[main 72cef94] Automatic commit at 2023-08-21 14:00:01
+ Committer: Ubuntu <ubuntu@ip-172-31-37-33.eu-west-1.compute.internal>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly. Run the
+following command and follow the instructions in your editor to edit
+your configuration file:
+
+    git config --global --edit
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 4 files changed, 39 insertions(+), 2 deletions(-)
+ create mode 100755 standard/cleanup_namespace.sh
+To github.com:MathiasBerlancourt/exam_k8s.git
+   a3e24a7..72cef94  main -> main
+From github.com:MathiasBerlancourt/exam_k8s
+ * branch            main       -> FETCH_HEAD
+Already up to date.

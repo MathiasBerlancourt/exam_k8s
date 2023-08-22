@@ -16,9 +16,6 @@ spec:
       containers:
         - name: phpmyadmin-container
           image: phpmyadmin/phpmyadmin:latest
-          env:
-            - name: PMA_HOST
-              value: mysql-service
           ports:
             - containerPort: 80
 ---

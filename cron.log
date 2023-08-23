@@ -461,3 +461,6 @@ After doing this, you may fix the identity used for this commit with:
  1 file changed, 20 insertions(+)
 To github.com:MathiasBerlancourt/exam_k8s.git
    49604d0..bdc8c7b  main -> main
+From github.com:MathiasBerlancourt/exam_k8s
+ * branch            main       -> FETCH_HEAD
+Already up to date.

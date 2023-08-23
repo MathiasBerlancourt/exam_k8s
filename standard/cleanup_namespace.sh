@@ -2,15 +2,13 @@
 
 NAMESPACE="standard"
 
+# Tableau contenant les types de ressources à supprimer
+RESOURCE_TYPES=("deployment" "statefulset" "service" "pod")
 
-kubectl delete deployment --all -n $NAMESPACE
-
-kubectl delete statefulset --all -n $NAMESPACE
-
-
-kubectl delete service --all -n $NAMESPACE
-
-
-kubectl delete pod --all -n $NAMESPACE
+# Boucle pour supprimer chaque type de ressource
+for RESOURCE_TYPE in "${RESOURCE_TYPES[@]}"; do
+    kubectl delete "$RESOURCE_TYPE" --all -n "$NAMESPACE"
+done
 
 echo "Cleanup completed in namespace $NAMESPACE."
+

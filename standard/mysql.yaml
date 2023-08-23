@@ -1,14 +1,21 @@
-apiVersion: apps/v1
-kind: StatefulSet
+apiVersion: v1
+kind: Secret
 metadata:
-  name: mysql-statefulset
+  name: mysql-secrets
+type: Opaque
+data:
+  root-password: cGFzc3dvcmQ=  
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-deployment
   namespace: standard
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: mysql
-  serviceName: mysql-service
   template:
     metadata:
       labels:
@@ -18,23 +25,26 @@ spec:
         - name: mysql
           image: mysql:latest
           env:
-            - name: MYSQL_ROOT_PASSWORD	
-              value: password
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secrets
+                  key: root-password
             - name: MYSQL_DATABASE
               value: storedb
+            - name: PMA_HOST
+              value: mysql-deployment
+            - name: PMA_PORT
+              value: "3306"
           ports:
             - containerPort: 3306
           volumeMounts:
             - name: mysql-data
               mountPath: /var/lib/mysql
-  volumeClaimTemplates:
-    - metadata:
-        name: mysql-data
-      spec:
-        accessModes: [ReadWriteOnce]
-        resources:
-          requests:
-            storage: 10Gi
+      volumes:
+        - name: mysql-data
+          persistentVolumeClaim:
+            claimName: mysql-data
 ---
 apiVersion: v1
 kind: Service
@@ -42,7 +52,7 @@ metadata:
   name: mysql-service
 spec:
   selector:
-    app: mysql
+    app: mysql-deployment
   ports:
     - protocol: TCP
       port: 3306

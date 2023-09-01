@@ -44,7 +44,7 @@ spec:
           volumeMounts:
             - mountPath: "/var/lib/mysql" 
               subPath: mysql
-              name: mysql-data            
+              name: mysql-pvc            
           env:
             - name: MYSQL_ROOT_PASSWORD
               valueFrom:
@@ -54,9 +54,9 @@ spec:
 
 
       volumes:
-        - name: mysql-data
+        - name: mysql-pvc
           persistentVolumeClaim:
-            claimName: mysql-data
+            claimName: mysql-pvc
 ---
 apiVersion: v1
 kind: Service

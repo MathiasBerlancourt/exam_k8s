@@ -1219,3 +1219,37 @@ To github.com:MathiasBerlancourt/exam_k8s.git
 From github.com:MathiasBerlancourt/exam_k8s
  * branch            main       -> FETCH_HEAD
 Already up to date.
+[main 0d4ccb0] Automatic commit at 2023-09-04 13:00:01
+ Committer: Ubuntu <ubuntu@ip-172-31-37-33.eu-west-1.compute.internal>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly. Run the
+following command and follow the instructions in your editor to edit
+your configuration file:
+
+    git config --global --edit
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 15 files changed, 260 insertions(+), 225 deletions(-)
+ delete mode 100644 helm/k8chart/templates/deployment.yaml
+ create mode 100644 helm/k8chart/templates/fastapi-deployment.yaml
+ create mode 100644 helm/k8chart/templates/fastapi-service.yaml
+ rewrite helm/k8chart/templates/hpa.yaml (98%)
+ rewrite helm/k8chart/templates/ingress.yaml (99%)
+ create mode 100644 helm/k8chart/templates/mysql-deployment.yaml
+ create mode 100644 helm/k8chart/templates/mysql-pvc.yaml
+ create mode 100644 helm/k8chart/templates/mysql-secret.yaml
+ create mode 100644 helm/k8chart/templates/mysql-service.yaml
+ create mode 100644 helm/k8chart/templates/phpmyadmin-deployment.yaml
+ create mode 100644 helm/k8chart/templates/phpmyadmin-service.yaml
+ delete mode 100644 helm/k8chart/templates/service.yaml
+ delete mode 100644 helm/k8chart/templates/serviceaccount.yaml
+ rewrite helm/k8chart/values.yaml (98%)
+To github.com:MathiasBerlancourt/exam_k8s.git
+   4f6909c..0d4ccb0  main -> main
+From github.com:MathiasBerlancourt/exam_k8s
+ * branch            main       -> FETCH_HEAD
+Already up to date.

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-NAMESPACE="standard"
+NAMESPACE="helm"
 
 # Tableau contenant les types de ressources à supprimer
 RESOURCE_TYPES=("deployment" "statefulset" "service" "pod" "ingress")

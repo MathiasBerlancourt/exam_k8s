@@ -1407,3 +1407,6 @@ After doing this, you may fix the identity used for this commit with:
  rename {standard => yaml-standard}/phpmyadmin.yaml (100%)
 To github.com:MathiasBerlancourt/exam_k8s.git
    02fa848..31ce577  main -> main
+From github.com:MathiasBerlancourt/exam_k8s
+ * branch            main       -> FETCH_HEAD
+Already up to date.

@@ -1670,3 +1670,27 @@ To github.com:MathiasBerlancourt/exam_k8s.git
 From github.com:MathiasBerlancourt/exam_k8s
  * branch            main       -> FETCH_HEAD
 Already up to date.
+[main 151f5aa] Automatic commit at 2023-09-11 23:00:01
+ Committer: Ubuntu <ubuntu@ip-172-31-37-33.eu-west-1.compute.internal>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly. Run the
+following command and follow the instructions in your editor to edit
+your configuration file:
+
+    git config --global --edit
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 1 file changed, 20 insertions(+)
+To github.com:MathiasBerlancourt/exam_k8s.git
+   e9ecdfa..151f5aa  main -> main
+From github.com:MathiasBerlancourt/exam_k8s
+ * branch            main       -> FETCH_HEAD
+   151f5aa..dc4479c  main       -> origin/main
+Updating 151f5aa..dc4479c
+Fast-forward
+ kustomize/mysql/deployment.yaml | 36 ++++++++++++++++++------------------
+ 1 file changed, 18 insertions(+), 18 deletions(-)

@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Statefulset
 metadata:
-  name: mysql-deployment
+  name: mysql-StatefulSet
   namespace: standard
   labels:
     app: mysql

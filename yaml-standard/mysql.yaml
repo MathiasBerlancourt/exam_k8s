@@ -20,9 +20,9 @@ spec:
       storage: 10Gi
 ---
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
-  name: mysql-deployment
+  name: mysql-StatefulSet
   namespace: standard
   labels:
     app: mysql

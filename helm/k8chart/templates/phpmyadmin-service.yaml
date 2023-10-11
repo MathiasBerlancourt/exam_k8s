@@ -1,3 +1,0 @@
-{{- if .Values.phpmyadminService }}
-{{ .Values.phpmyadminService | toYaml |nindent 2 }}
-{{- end }}

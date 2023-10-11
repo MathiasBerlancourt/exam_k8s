@@ -1,4 +1,0 @@
-# templates/hpa.yaml
-{{- if .Values.hpa }}
-{{ .Values.hpa | toYaml | nindent 2 }}
-{{- end }}

@@ -1,3 +1,0 @@
-{{- if .Values.deployment }}
-{{ .Values.deployment | toYaml | nindent 2 }}
-{{- end }}

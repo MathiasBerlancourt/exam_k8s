@@ -1,3 +1,0 @@
-{{- if .Values.mysqlPVC }}
-{{ .Values.mysqlPVC | toYaml | nindent 2 }}
-{{- end }}

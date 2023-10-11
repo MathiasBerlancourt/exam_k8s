@@ -1,5 +1,0 @@
-# templates/ingress.yaml
-
-{{- if .Values.ingress }}
-{{ .Values.ingress | toYaml | nindent 2 }}
-{{- end }}

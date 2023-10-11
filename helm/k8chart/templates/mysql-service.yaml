@@ -1,3 +1,0 @@
-{{- if .Values.mysqlService }}
-{{ .Values.mysqlService | toYaml | nindent 2 }}
-{{- end }}

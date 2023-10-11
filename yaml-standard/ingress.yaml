@@ -1,14 +1,14 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: phpmyadmin-ingress
+  name: fastapi-ingress
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
   namespace: standard
 spec:
   ingressClassName: traefik
   tls:
-    - secretName: phpmyadmin-secret
+    - secretName: fastapi-secret
       hosts:
         - exam-k8s.mathiasb.cloudns.ph
   rules:
@@ -19,6 +19,6 @@ spec:
           pathType: Prefix
           backend:
              service:
-              name: phpmyadmin-service
+              name: fastapi-service
               port:
                 number: 80

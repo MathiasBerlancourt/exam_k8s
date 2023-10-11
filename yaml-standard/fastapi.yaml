@@ -18,8 +18,16 @@ spec:
       containers:
         - name: fastapi
           image: mathiasbrl/exam_k8s_fastapi:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 8000
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secrets
+                  key: root-password
+
 ---
 apiVersion: v1
 kind: Service

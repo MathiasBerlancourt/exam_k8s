@@ -1,207 +1,36 @@
-# Déploiement FastAPI
-deployment:
-  apiVersion: apps/v1
-  kind: Deployment
-  metadata:
-    name: fastapi-deployment
-    namespace: standard
-  spec:
-    selector:
-      matchLabels:
-        app: fastapi
-    replicas: 3
-    strategy:
-      type: RollingUpdate
-    template:
-      metadata:
-        labels:
-          app: fastapi
-      spec:
-        containers:
-          - name: fastapi
-            image: mathiasbrl/exam_k8s_fastapi:latest
-            ports:
-              - containerPort: 8000
+# Default values for helm-exam.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
 
-# Service FastAPI
-service:
-  apiVersion: v1
-  kind: Service
-  metadata:
-    name: fastapi-service
-  spec:
-    selector:
-      app: fastapi
-    ports:
-      - port: 80
-        targetPort: 8000
+namespace: "helm"
+
+fastapi:
+  name: "fastapi"
+  replicaCount: 3
+  image: mathiasbrl/exam_k8s_fastapi
+          imagePullPolicy: Always
+  service:
+    port: 80
+  hpa:
+    maxReplicaCount: 6
+    targetCPU: 70
+
+pma:
+  name: "phpmyadmin"
+  replicaCount: 1
+  service:
     type: NodePort
+    port: 80
+    nodePort: 30008
 
-# Secret MySQL
-mysqlSecret:
-  apiVersion: v1
-  kind: Secret
-  metadata:
-    name: mysql-secrets
-  type: Opaque
-  data:
-    root-password: cGFzc3dvcmQ=
-
-# PersistentVolumeClaim MySQL
-mysqlPVC:
-  apiVersion: v1
-  kind: PersistentVolumeClaim
-  metadata:
-    name: mysql-pvc
-    namespace: standard
-  spec:
-    accessModes:
-      - ReadWriteOnce
-    resources:
-      requests:
-        storage: 10Gi
-
-# Déploiement MySQL
-mysqlDeployment:
-  apiVersion: apps/v1
-  kind: Deployment
-  metadata:
-    name: mysql-deployment
-    namespace: standard
-    labels:
-      app: mysql
-  spec:
-    replicas: 1
-    selector:
-      matchLabels:
-        app: mysql
-    template:
-      metadata:
-        labels:
-          app: mysql
-      spec:
-        containers:
-          - name: mysql
-            image: mysql:latest
-            ports:
-              - containerPort: 3306
-            volumeMounts:
-              - mountPath: "/var/lib/mysql"
-                subPath: mysql
-                name: mysql-pvc
-            env:
-              - name: MYSQL_ROOT_PASSWORD
-                valueFrom:
-                  secretKeyRef:
-                    name: mysql-secrets
-                    key: root-password
-        volumes:
-          - name: mysql-pvc
-            persistentVolumeClaim:
-              claimName: mysql-pvc
-
-# Service MySQL
-mysqlService:
-  apiVersion: v1
-  kind: Service
-  metadata:
-    name: mysql-service
-  spec:
-    selector:
-      app: mysql
-    ports:
-      - protocol: TCP
-        port: 3306
-        targetPort: 3306
-
-# Déploiement phpMyAdmin
-phpmyadminDeployment:
-  apiVersion: apps/v1
-  kind: Deployment
-  metadata:
-    name: phpmyadmin-deployment
-    namespace: standard
-    labels:
-      app: phpmyadmin
-  spec:
-    replicas: 1
-    selector:
-      matchLabels:
-        app: phpmyadmin
-    template:
-      metadata:
-        labels:
-          app: phpmyadmin
-      spec:
-        containers:
-          - name: phpmyadmin
-            image: phpmyadmin/phpmyadmin:latest
-            ports:
-              - containerPort: 80
-            env:
-              - name: PMA_HOST
-                value: mysql-service
-              - name: PMA_PORT
-                value: "3306"
-              - name: MYSQL_ROOT_PASSWORD
-                valueFrom:
-                  secretKeyRef:
-                    name: mysql-secrets
-                    key: root-password
-
-# Service phpMyAdmin
-phpmyadminService:
-  apiVersion: v1
-  kind: Service
-  metadata:
-    name: phpmyadmin-service
-  spec:
-    type: NodePort
-    selector:
-      app: phpmyadmin
-    ports:
-      - protocol: TCP
-        port: 80
-        targetPort: 80
-
-# HorizontalPodAutoscaler (HPA) FastAPI
-hpa:
-  apiVersion: autoscaling/v1
-  kind: HorizontalPodAutoscaler
-  metadata:
-    name: fastapi-hpa
-  spec:
-    scaleTargetRef:
-      apiVersion: apps/v1
-      kind: Deployment
-      name: fastapi-deployment
-    minReplicas: 3
-    maxReplicas: 6
-    targetCPUUtilizationPercentage: 70
-
-# Ingress phpMyAdmin
-ingress:
-  apiVersion: networking.k8s.io/v1
-  kind: Ingress
-  metadata:
-    name: phpmyadmin-ingress
-    namespace: standard
-  spec:
-    rules:
-      - host: exam-k8s.mathiasb.cloudns.ph
-        http:
-          paths:
-            - path: /
-              pathType: Prefix
-              backend:
-                service:
-                  name: phpmyadmin-service
-                  port:
-                    number: 80
-
-# Namespace Helm
-namespaceHelm:
-  apiVersion: v1
-  kind: Namespace
-  metadata:
-    name: helm
+mysql:
+  name: "mysql"
+  replicaCount: 1
+  database: "storedb"
+  service:
+    port: 3306
+  pvc:
+    accessMode: "ReadWriteOnce"
+    storage: 10Gi
+  secret:
+    key: "password"

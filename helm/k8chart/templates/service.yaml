@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.fastapi.name }}-service
+  namespace: {{ .Values.namespace }}
+spec:
+  selector:
+    app: {{ .Values.fastapi.name }}
+  ports:
+    - protocol: TCP
+      port: {{ .Values.fastapi.service.port }}
+      targetPort: {{ .Values.fastapi.service.port }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.pma.name }}-service
+  namespace: {{ .Values.namespace }}
+spec:
+  type: {{ .Values.pma.service.type }}
+  selector:
+    app: {{ .Values.pma.name }}
+  ports:
+    - protocol: TCP
+      port: {{ .Values.pma.service.port }}
+      targetPort: {{ .Values.pma.service.port }}
+      nodePort: {{ .Values.pma.service.nodePort }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.mysql.name }}-service
+  namespace: {{ .Values.namespace }}
+spec:
+  selector:
+    app: {{ .Values.mysql.name }}
+  ports:
+    - protocol: TCP
+      port: {{ .Values.mysql.service.port }}
+      targetPort: {{ .Values.mysql.service.port }}

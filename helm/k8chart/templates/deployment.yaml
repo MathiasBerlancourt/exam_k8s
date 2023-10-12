@@ -1,0 +1,82 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.fastapi.name }}-deployment
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ .Values.fastapi.name }}
+spec:
+  replicas: {{ .Values.fastapi.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.fastapi.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.fastapi.name }}
+    spec:
+      containers:
+      - name: {{ .Values.fastapi.name }}
+        image: "{{ .Values.fastapi.image.repository }}"
+        ports:
+        - containerPort: {{ .Values.fastapi.service.port }}
+        env:
+            - name: MYSQL_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.mysql.name }}-config
+                  key: host
+            - name: MYSQL_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.mysql.name }}-config
+                  key: port
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.mysql.name }}-secret
+                  key: {{ .Values.mysql.secret.key }}
+            - name: MYSQL_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.mysql.name }}-config
+                  key: database
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.pma.name }}-deployment
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ .Values.pma.name }}
+spec:
+  replicas: {{ .Values.pma.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.pma.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.pma.name }}
+    spec:
+      containers:
+      - name: {{ .Values.pma.name }}
+        image: {{ .Values.pma.name }}
+        ports:
+        - containerPort: {{ .Values.pma.service.port }}
+        env:
+            - name: PMA_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.mysql.name }}-config
+                  key: host
+            - name: PMA_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.mysql.name }}-config
+                  key: port
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.mysql.name }}-secret
+                  key: {{ .Values.mysql.secret.key }}

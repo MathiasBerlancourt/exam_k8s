@@ -1,38 +1,38 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: mysql-statefulset
-  namespace: standard
+  name: {{Values.mysql.name}}-statefulset
+  namespace: {{.Values.namespace}}
   labels:
-    app: mysql
+    app: {{Values.mysql.name}}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: mysql
+      app: {{Values.mysql.name}}
   template:
     metadata:
       labels:
-        app: mysql
+        app: {{Values.mysql.name}}
     spec:
       containers:
-        - name: mysql
-          image: mysql:latest
+        - name: {{Values.mysql.name}}
+          image: {{Values.mysql.name}}:latest
           ports:
-            - containerPort: 3306
+            - containerPort: {{Values.mysql.service.port}}
           volumeMounts:
             - mountPath: "/var/lib/mysql" 
-              subPath: mysql
-              name: mysql-pvc            
+              subPath: {{Values.mysql.name}}
+              name: {{Values.mysql.name}}-pvc            
           env:
             - name: MYSQL_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: mysql-secrets
+                  name: {{Values.mysql.name}}-secrets
                   key: root-password
 
 
       volumes:
-        - name: mysql-pvc
+        - name: {{Values.mysql.name}}-pvc  
           persistentVolumeClaim:
-            claimName: mysql-pvc
+            claimName: {{Values.mysql.name}}-pvc  

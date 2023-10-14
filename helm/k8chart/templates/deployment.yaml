@@ -1,3 +1,12 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ .Values.mysql.name }}-secret
+  namespace: {{ .Values.namespace }}
+type: Opaque
+data:
+  {{ .Values.mysql.secret.key }}: cGFzc3dvcmQ=
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -80,3 +89,4 @@ spec:
                 secretKeyRef:
                   name: {{ .Values.mysql.name }}-secret
                   key: {{ .Values.mysql.secret.key }}
+
